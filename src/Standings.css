@@ -23,6 +23,7 @@
   padding: 12px 55px 15px 15px;
   font-size: 14px;
   color: #004c00;
+  transition:all .5s ease;
 }
 
 .custom-select:after {
@@ -40,10 +41,14 @@
   z-index: -1;
 }
 
+.custom-select select:hover {
+  box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+}
+
 /* Standings Table */
 .styled-table {
   border-collapse: collapse;
-  margin: 25px auto;
+  margin: 1rem auto;
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
@@ -63,11 +68,12 @@
 
 .styled-table tbody tr {
   border-bottom: 1px solid #dddddd;
-  transition: transform 450ms;
+  transition:all .5s ease;
 }
 
 .styled-table tbody tr:hover {
   transform: scale(1.08);
+  box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
 }
 
 .styled-table tbody tr:nth-of-type(even) {
@@ -80,4 +86,23 @@
 
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
+}
+
+button {
+  display: block;
+  align-self:center;
+  background:transparent;
+  padding:1rem 1rem;
+  margin:.5rem auto 0;
+  color:#41403E;
+  font-size: 0.8rem;
+  letter-spacing:1px;
+  outline:none;
+  border-radius: 1px;
+  border:solid 1px #41403E;
+  transition:all .5s ease;
+}
+
+button:hover {
+  box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
 }

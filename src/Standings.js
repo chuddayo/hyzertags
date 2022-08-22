@@ -5,7 +5,7 @@ import axios from "./axios";
 
 function Standings() {
   const [leagues, setLeagues] = useState([]);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
   const [leagueSelect, setLeagueSelect] = useState([]);
 
   useEffect(() => {
@@ -27,23 +27,26 @@ function Standings() {
 
   return (
     <div>
-      <div className="custom-select">
-        {/* <select value={value}> */}
-        <select value={value} onChange={leagueChange}>
-          <option key="0">-- Select League --</option>
-          {leagues.map((league) => (
-            <option key={league.id} value={league.id}>
-              {league.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      {/* <StandingsTable /> */}
+      {/* Dropdown Select */}
+
+        <div className="custom-select">
+          <select value={value} onChange={leagueChange}>
+            <option key="0">-- Select League --</option>
+            {leagues.map((league) => (
+              <option key={league.id} value={league.id}>
+                {league.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button>Create Event</button>
+
+      {/* Standings Table */}
       <table className="styled-table">
         <thead>
-          <tr>
-            <th colspan="2">{value}</th>
-          </tr>
+          {/* <tr>
+            <th colSpan="2">{value}</th>
+          </tr> */}
           <tr>
             <th>Tag #</th>
             <th>Name</th>

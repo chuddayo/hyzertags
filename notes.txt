@@ -1,2 +1,7 @@
 // Standings Table Styling
 https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
+
+
+// Hide table until something selected
+// PUT logic in spring
+// move all into its own repo
