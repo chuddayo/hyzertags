@@ -4,8 +4,13 @@ import requests from "./requests";
 import axios from "./axios";
 
 function Standings() {
+  // initial component GET request for leagues list
   const [leagues, setLeagues] = useState([]);
-  const [value, setValue] = useState("");
+
+  // keeps track of value of selected league in dropdown
+  const [leagueValue, setValue] = useState("");
+
+  // gets league standings upon selection
   const [leagueSelect, setLeagueSelect] = useState([]);
 
   useEffect(() => {
@@ -28,20 +33,22 @@ function Standings() {
   return (
     <div>
       {/* Dropdown Select */}
+      <div className="custom-select">
+        <select value={leagueValue} onChange={leagueChange}>
+          <option key="0">-- Select League --</option>
+          {leagues.map((league) => (
+            <option key={league.id} value={league.id}>
+              {league.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        <div className="custom-select">
-          <select value={value} onChange={leagueChange}>
-            <option key="0">-- Select League --</option>
-            {leagues.map((league) => (
-              <option key={league.id} value={league.id}>
-                {league.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button>Create Event</button>
+      {/* Create Event Button */}
+      <button>Create Event</button>
 
       {/* Standings Table */}
+      {leagueValue && 
       <table className="styled-table">
         <thead>
           {/* <tr>
@@ -62,7 +69,7 @@ function Standings() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>}
     </div>
   );
 }
