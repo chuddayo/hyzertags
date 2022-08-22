@@ -31,7 +31,7 @@ public class EventResultsController {
     public ResponseEntity<EventResults> updateEventResults(
             @PathVariable Long id,
             @RequestBody EventResults eventResults) {
-        // TODO put logic needed
+        eventResults.setId(id);
         return new ResponseEntity<>(eventResultsRepository.save(eventResults), HttpStatus.OK);
     }
 

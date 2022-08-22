@@ -8,7 +8,7 @@ function Standings() {
   const [leagues, setLeagues] = useState([]);
 
   // keeps track of value of selected league in dropdown
-  const [leagueValue, setValue] = useState("");
+  const [leagueValue, setLeagueValue] = useState("");
 
   // gets league standings upon selection
   const [leagueSelect, setLeagueSelect] = useState([]);
@@ -22,8 +22,9 @@ function Standings() {
     fetchData();
   }, []);
 
+  // called when league is selected from dropdown
   const leagueChange = (e) => {
-    setValue(e.target.value);
+    setLeagueValue(e.target.value);
     axios
       .get(`${requests.fetchLeagues}/${e.target.value}/standings`)
       .then((response) => setLeagueSelect(response.data))
@@ -32,6 +33,7 @@ function Standings() {
 
   return (
     <div>
+      <h4>select league to see standings</h4>
       {/* Dropdown Select */}
       <div className="custom-select">
         <select value={leagueValue} onChange={leagueChange}>
@@ -45,31 +47,32 @@ function Standings() {
       </div>
 
       {/* Create Event Button */}
-      <button>Create Event</button>
+      {leagueValue && (<button>Create Event</button>)}
 
       {/* Standings Table */}
-      {leagueValue && 
-      <table className="styled-table">
-        <thead>
-          {/* <tr>
+      {leagueValue && (
+        <table className="styled-table">
+          <thead>
+            {/* <tr>
             <th colSpan="2">{value}</th>
           </tr> */}
-          <tr>
-            <th>Tag #</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leagueSelect.map((playerRow) => (
-            <tr key={playerRow.player.id}>
-              <td>{playerRow.playerTag}</td>
-              <td>
-                {playerRow.player.firstName} {playerRow.player.lastName}
-              </td>
+            <tr>
+              <th>Tag #</th>
+              <th>Name</th>
             </tr>
-          ))}
-        </tbody>
-      </table>}
+          </thead>
+          <tbody>
+            {leagueSelect.map((playerRow) => (
+              <tr key={playerRow.player.id}>
+                <td>{playerRow.playerTag}</td>
+                <td>
+                  {playerRow.player.firstName} {playerRow.player.lastName}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
