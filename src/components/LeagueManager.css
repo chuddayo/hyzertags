@@ -1,3 +1,4 @@
+/* Select Drop Down Styles */
 .custom-select {
   position: relative;
   display: block;
@@ -45,13 +46,14 @@
   box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
 }
 
-/* Standings Table */
+/* Table (standings and event) */
 .styled-table {
   border-collapse: collapse;
   margin: 1rem auto;
   font-size: 0.9em;
   font-family: sans-serif;
-  min-width: 400px;
+  min-width: 300px;
+  max-width: 500px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -80,6 +82,15 @@
 
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
+}
+
+.styled-table td:nth-child(3) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.styled-table .text-input {
+  max-width: 2rem;
 }
 
 /* Button */

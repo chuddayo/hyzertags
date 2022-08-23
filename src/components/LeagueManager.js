@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./Standings.css";
+import "./LeagueManager.css";
 import requests from "../requests";
 import axios from "../axios";
-import EventTable from './EventTable';
+import EventTable from "./EventTable";
 
 function Standings() {
+  // LeagueManager
   // initial component GET request for leagues list
   const [leagues, setLeagues] = useState([]);
 
@@ -42,6 +43,8 @@ function Standings() {
           response.data[index] = {
             ...playerStanding,
             ...check,
+            strokesToPar: null,
+            leagueID: parseInt(e.target.value),
           };
         });
         setLeagueSelect(response.data);
@@ -50,43 +53,43 @@ function Standings() {
 
   // called when a check-box is selected for event check-in
   const playerCheckIn = (item) => {
-    leagueSelect.map(playerStanding => {
+    leagueSelect.map((playerStanding) => {
       if (playerStanding.player.id === item.player.id) {
-        playerStanding.selected ? playerStanding.selected = false : playerStanding.selected = true;
+        playerStanding.selected
+          ? (playerStanding.selected = false)
+          : (playerStanding.selected = true);
       }
       return playerStanding;
-    })
+    });
     setPlayersCheckedIn(leagueSelect.filter((e) => e.selected));
-    console.log(playersCheckedIn);
   };
 
   // called when Create Event button is clicked
   const eventTriggerClick = () => {
     setShowEventTable(!showEventTable);
-  }
+  };
 
   return (
     <div>
-      <h4>select league to see standings</h4>
+      {!showEventTable && <h4>select league to see standings</h4>}
       {/* Dropdown Select */}
-      <div className="custom-select">
-        <select value={leagueValue} onChange={leagueChange}>
-          <option key="0">-- Select League --</option>
-          {leagues.map((league) => (
-            <option key={league.id} value={league.id}>
-              {league.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      {!showEventTable && (
+        <div className="custom-select">
+          <select value={leagueValue} onChange={leagueChange}>
+            <option key="0">-- Select League --</option>
+            {leagues.map((league) => (
+              <option key={league.id} value={league.id}>
+                {league.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Standings Table */}
-      {leagueValue && (
+      {!showEventTable && leagueValue && (
         <table className="styled-table">
           <thead>
-            {/* <tr>
-            <th colSpan="2">{value}</th>
-          </tr> */}
             <tr>
               <th>Tag #</th>
               <th>Name</th>
@@ -101,11 +104,13 @@ function Standings() {
                   {playerRow.player.firstName} {playerRow.player.lastName}
                 </td>
                 <td>
-                  <input 
-                    type='checkbox'
+                  <input
+                    type="checkbox"
                     id={playerRow.player.id}
-                    onChange={e => {playerCheckIn(playerRow)}}
-                    />
+                    onChange={(e) => {
+                      playerCheckIn(playerRow);
+                    }}
+                  />
                 </td>
               </tr>
             ))}
@@ -114,16 +119,10 @@ function Standings() {
       )}
 
       {/* Create Event Button */}
-      {leagueValue && 
-        <button
-          onClick={eventTriggerClick}
-        >
-          Create Event
-        </button>
-      }
+      {leagueValue && !showEventTable && <button onClick={eventTriggerClick}>Create Event</button>}
 
-      {showEventTable && <EventTable playerList={playersCheckedIn}/>}
-
+      {showEventTable && <EventTable playerList={playersCheckedIn} />}
+      {/* ResultsTable here! */}
     </div>
   );
 }

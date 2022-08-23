@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import Standings from "./components/Standings";
+import LeagueManager from "./components/LeagueManager";
 import "./index.css";
 
 function App() {
   return (
     <div className="app">
       <h1>HyzerTags</h1>
-      <Standings />
+      <LeagueManager />
     </div>
   );
 }
