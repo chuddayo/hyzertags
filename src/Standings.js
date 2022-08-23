@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Standings.css";
 import requests from "./requests";
 import axios from "./axios";
+import EventTable from './EventTable';
 
 function Standings() {
   // initial component GET request for leagues list
@@ -25,10 +26,30 @@ function Standings() {
   // called when league is selected from dropdown
   const leagueChange = (e) => {
     setLeagueValue(e.target.value);
+
+    // need to inject
+    let check = { selected: false };
     axios
       .get(`${requests.fetchLeagues}/${e.target.value}/standings`)
-      .then((response) => setLeagueSelect(response.data))
-      .then((error) => console.log(error));
+      .then((response) => {
+        response.data.forEach((playerStanding, index) => {
+          response.data[index] = {
+            ...playerStanding,
+            ...check,
+          };
+        });
+        setLeagueSelect(response.data);
+      });
+  };
+
+  // called when a check-box is selected for event check-in
+  const playerCheckIn = (item) => {
+    leagueSelect.map(playerStanding => {
+      if (playerStanding.player.id === item.player.id) {
+        playerStanding.selected ? playerStanding.selected = false : playerStanding.selected = true;
+      }
+      return playerStanding;
+    })
   };
 
   return (
@@ -46,9 +67,6 @@ function Standings() {
         </select>
       </div>
 
-      {/* Create Event Button */}
-      {leagueValue && (<button>Create Event</button>)}
-
       {/* Standings Table */}
       {leagueValue && (
         <table className="styled-table">
@@ -59,6 +77,7 @@ function Standings() {
             <tr>
               <th>Tag #</th>
               <th>Name</th>
+              <th>Check-In</th>
             </tr>
           </thead>
           <tbody>
@@ -68,11 +87,29 @@ function Standings() {
                 <td>
                   {playerRow.player.firstName} {playerRow.player.lastName}
                 </td>
+                <td>
+                  <input 
+                    type='checkbox'
+                    id={playerRow.player.id}
+                    onChange={e => {playerCheckIn(playerRow)}}
+                    />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
+
+      {/* Create Event Button */}
+      {leagueValue && 
+        <button
+        >
+          Create Event
+        </button>
+      }
+
+      <EventTable />
+
     </div>
   );
 }

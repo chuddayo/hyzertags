@@ -1,5 +1,2 @@
 // Standings Table Styling
 https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
-
-// PUT logic in spring
-// github issues
