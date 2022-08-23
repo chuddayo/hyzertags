@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Standings from "./Standings";
+import Standings from "./components/Standings";
 import "./index.css";
 
 function App() {

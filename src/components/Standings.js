@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Standings.css";
-import requests from "./requests";
-import axios from "./axios";
+import requests from "../requests";
+import axios from "../axios";
 import EventTable from './EventTable';
 
 function Standings() {
@@ -13,6 +13,12 @@ function Standings() {
 
   // gets league standings upon selection
   const [leagueSelect, setLeagueSelect] = useState([]);
+
+  // triggers event table component and hides standings table
+  const [showEventTable, setShowEventTable] = useState(false);
+
+  // updated on each player check-in
+  const [playersCheckedIn, setPlayersCheckedIn] = useState(leagueSelect);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,7 +56,14 @@ function Standings() {
       }
       return playerStanding;
     })
+    setPlayersCheckedIn(leagueSelect.filter((e) => e.selected));
+    console.log(playersCheckedIn);
   };
+
+  // called when Create Event button is clicked
+  const eventTriggerClick = () => {
+    setShowEventTable(!showEventTable);
+  }
 
   return (
     <div>
@@ -103,12 +116,13 @@ function Standings() {
       {/* Create Event Button */}
       {leagueValue && 
         <button
+          onClick={eventTriggerClick}
         >
           Create Event
         </button>
       }
 
-      <EventTable />
+      {showEventTable && <EventTable playerList={playersCheckedIn}/>}
 
     </div>
   );
