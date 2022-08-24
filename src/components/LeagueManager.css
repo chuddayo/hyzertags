@@ -93,6 +93,14 @@
   max-width: 2rem;
 }
 
+.event-input {
+  display: block;
+  margin: 0 auto 1rem;
+  padding: 5px;
+  line-height: 1.25rem;
+  width: 200px;
+}
+
 /* Button */
 
 button {

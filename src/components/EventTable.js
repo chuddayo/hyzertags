@@ -5,6 +5,8 @@ import axios from '../axios.js';
 
 function EventTable({playerList}) {
 
+  let eventName = "";
+
   // called when a score is changed on EventTable
   const handleScoreChange = (e, playerID) => {
     playerList.map(playerItem => {
@@ -13,6 +15,10 @@ function EventTable({playerList}) {
       }
       return playerItem;
     })
+  }
+
+  const handleEventNameChange = (e) => {
+    eventName = e.target.value;
   }
   
   // called when results are submitted
@@ -23,7 +29,7 @@ function EventTable({playerList}) {
     let newEvent = await axios
       .post(`${requests.fetchEvents}`, 
       {
-        name: 'a new event!',
+        name: eventName,
         date: new Date().toISOString().substring(0, 10)
       });
 
@@ -80,14 +86,19 @@ function EventTable({playerList}) {
         </tbody>
       </table>
 
-      {/* Create Event Button */}
+      <input 
+        placeholder="Event Name"
+        className="text-input event-input"
+        onChange={e => {handleEventNameChange(e)}} 
+      />
 
+      {/* Create Event Button */}
         <button
           onClick={handleSubmitResults}
         >
           Submit Results
         </button>
-            <br /><br />
+        <br /><br />
     </div>
   );
 }
