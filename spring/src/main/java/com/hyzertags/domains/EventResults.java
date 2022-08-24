@@ -29,6 +29,28 @@ public class EventResults implements Comparable<EventResults> {
     @Column(name = "outgoing_tag")
     private Integer outgoingTag;
 
+    public EventResults() {
+    }
+
+    public EventResults(Long leagueID, Long eventID, Long playerID, Integer totalStrokesToPar, Integer incomingTag, Integer outgoingTag) {
+        this.leagueID = leagueID;
+        this.eventID = eventID;
+        this.playerID = playerID;
+        this.totalStrokesToPar = totalStrokesToPar;
+        this.incomingTag = incomingTag;
+        this.outgoingTag = outgoingTag;
+    }
+
+    public EventResults(Long id, Long leagueID, Long eventID, Long playerID, Integer totalStrokesToPar, Integer incomingTag, Integer outgoingTag) {
+        this.id = id;
+        this.leagueID = leagueID;
+        this.eventID = eventID;
+        this.playerID = playerID;
+        this.totalStrokesToPar = totalStrokesToPar;
+        this.incomingTag = incomingTag;
+        this.outgoingTag = outgoingTag;
+    }
+
     public Long getId() {
         return this.id;
     }

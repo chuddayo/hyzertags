@@ -1,6 +1,8 @@
 package com.hyzertags.controllers;
 
 import com.hyzertags.repositories.EventResultsRepository;
+import com.hyzertags.services.EventResultsService;
+import com.hyzertags.services.dto.PartialResultDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +13,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class EventResultsController {
     private final EventResultsRepository eventResultsRepository;
+    private final EventResultsService eventResultsService;
 
-    public EventResultsController(EventResultsRepository eventResultsRepository) {
+    public EventResultsController(EventResultsRepository eventResultsRepository, EventResultsService eventResultsService) {
         this.eventResultsRepository = eventResultsRepository;
+        this.eventResultsService = eventResultsService;
     }
 
     /**
@@ -22,6 +26,14 @@ public class EventResultsController {
     @PostMapping("/event-results")
     public ResponseEntity<EventResults> createEventResults(@RequestBody EventResults eventResults) {
         return new ResponseEntity<>(eventResultsRepository.save(eventResults), HttpStatus.CREATED);
+    }
+
+    /**
+     * POST : calls the service to sort and finalize these results and creates new eventResults
+     */
+    @PostMapping("/event-results/list")
+    public ResponseEntity<List<EventResults>> finalizeResults(@RequestBody List<PartialResultDTO> partialResults) {
+        return new ResponseEntity<>(eventResultsService.postEventResults(partialResults), HttpStatus.CREATED);
     }
 
     /**

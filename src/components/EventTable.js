@@ -40,9 +40,9 @@ function EventTable({playerList}) {
     })
     console.log(resultsArray);
 
-    // create a POST method in spring and service logic to handle those and put them as EventResults to DB
-
     // POST resultsArray
+    let resultsPosted = await axios.post(`${requests.fetchEventResults}/list`, resultsArray);
+    console.log(resultsPosted);
 
     // add event name feature
   }
