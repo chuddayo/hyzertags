@@ -3,8 +3,7 @@ import React from "react";
 import requests from "../requests";
 import axios from '../axios.js';
 
-function EventTable({playerList}) {
-
+function EventTable({eventResults, playerList}) {
   let eventName = "";
 
   // called when a score is changed on EventTable
@@ -23,8 +22,6 @@ function EventTable({playerList}) {
   
   // called when results are submitted
   async function handleSubmitResults() {
-    console.log(playerList);
-  
     // get an eventID after creating a new one!
     let newEvent = await axios
       .post(`${requests.fetchEvents}`, 
@@ -44,13 +41,10 @@ function EventTable({playerList}) {
         incomingTag : playerResult.playerTag
       });
     })
-    console.log(resultsArray);
 
     // POST resultsArray
     let resultsPosted = await axios.post(`${requests.fetchEventResults}/list`, resultsArray);
-    console.log(resultsPosted);
-
-    // add event name feature
+    eventResults(resultsPosted.data);
   }
 
   return (

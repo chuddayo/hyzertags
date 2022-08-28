@@ -2,6 +2,7 @@ package com.hyzertags.controllers;
 
 import com.hyzertags.repositories.EventResultsRepository;
 import com.hyzertags.services.EventResultsService;
+import com.hyzertags.services.dto.FinalResultDTO;
 import com.hyzertags.services.dto.PartialResultDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class EventResultsController {
      * POST : calls the service to sort and finalize these results and creates new eventResults
      */
     @PostMapping("/event-results/list")
-    public ResponseEntity<List<EventResults>> finalizeResults(@RequestBody List<PartialResultDTO> partialResults) {
+    public ResponseEntity<List<FinalResultDTO>> finalizeResults(@RequestBody List<PartialResultDTO> partialResults) {
         return new ResponseEntity<>(eventResultsService.postEventResults(partialResults), HttpStatus.CREATED);
     }
 

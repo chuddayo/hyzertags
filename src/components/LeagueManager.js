@@ -3,6 +3,7 @@ import "./LeagueManager.css";
 import requests from "../requests";
 import axios from "../axios";
 import EventTable from "./EventTable";
+import EventResultsTable from "./EventResultsTable";
 
 function Standings() {
   // LeagueManager
@@ -21,6 +22,9 @@ function Standings() {
   // updated on each player check-in
   const [playersCheckedIn, setPlayersCheckedIn] = useState(leagueSelect);
 
+  // called back from child to show full event results table
+  const [eventResults, setEventResults] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(`${requests.fetchLeagues}`);
@@ -35,14 +39,13 @@ function Standings() {
     setLeagueValue(e.target.value);
 
     // need to inject
-    let check = { selected: false };
     axios
       .get(`${requests.fetchLeagues}/${e.target.value}/standings`)
       .then((response) => {
         response.data.forEach((playerStanding, index) => {
           response.data[index] = {
             ...playerStanding,
-            ...check,
+            selected: false,
             strokesToPar: null,
             leagueID: parseInt(e.target.value),
           };
@@ -68,6 +71,10 @@ function Standings() {
   const eventTriggerClick = () => {
     setShowEventTable(!showEventTable);
   };
+
+  const handleEventResults = (results) => {
+    setEventResults(results);
+  }
 
   return (
     <div>
@@ -121,8 +128,8 @@ function Standings() {
       {/* Create Event Button */}
       {leagueValue && !showEventTable && <button onClick={eventTriggerClick}>Create Event</button>}
 
-      {showEventTable && <EventTable playerList={playersCheckedIn} />}
-      {/* ResultsTable here! */}
+      {showEventTable && eventResults.length === 0 && <EventTable eventResults={handleEventResults} playerList={playersCheckedIn} />}
+      {eventResults.length > 0 && <EventResultsTable eventResults={eventResults}/>}
     </div>
   );
 }
