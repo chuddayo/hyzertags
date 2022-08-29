@@ -74,12 +74,12 @@
 
 .styled-table tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
-  transition: 250ms ease-in;
+  transition: 200ms;
 }
 
 .styled-table tbody tr:nth-of-type(odd) {
   background-color: #e9ffe9;
-  transition: 250ms ease-in;
+  transition: 200ms;
 }
 
 .styled-table tbody tr:nth-of-type(even):hover,
