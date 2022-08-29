@@ -51,31 +51,37 @@ function Standings() {
 
   const handleEventResults = (results) => {
     setEventResults(results);
-  }
+  };
 
   const handleLeagueStandingsChange = (standings) => {
     setLeagueStandings(standings);
-  }
+  };
 
   return (
     <div>
       {/* league selection */}
-      {!showEventTable && 
-        <LeagueSelection 
-          leagues={leagues} 
-          leagueStandings={leagueStandings} 
-          playerCheckIn={playerCheckIn} 
+      {!showEventTable && (
+        <LeagueSelection
+          leagues={leagues}
+          leagueStandings={leagueStandings}
+          playerCheckIn={playerCheckIn}
           handleLeagueStandingsChange={handleLeagueStandingsChange}
           eventTriggerClick={eventTriggerClick}
-      />}
-      
+        />
+      )}
+
       {/* Event Table to Enter Results */}
-      {showEventTable && eventResults.length === 0 && 
-        <EventTable eventResults={handleEventResults} playerList={playersCheckedIn} />}
-      
+      {showEventTable && eventResults.length === 0 && (
+        <EventTable
+          eventResults={handleEventResults}
+          playerList={playersCheckedIn}
+        />
+      )}
+
       {/* Final Results Sorted By Outgoing Tag */}
-      {eventResults.length > 0 && 
-        <EventResultsTable eventResults={eventResults}/>}
+      {eventResults.length > 0 && (
+        <EventResultsTable eventResults={eventResults} />
+      )}
     </div>
   );
 }

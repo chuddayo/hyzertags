@@ -1,0 +1,11 @@
+.flex-buttons {
+    margin: 0 auto;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-buttons button {
+    margin: 0.5rem .25rem;
+}

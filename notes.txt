@@ -1,2 +1,9 @@
 // Standings Table Styling
 https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
+
+get nextTag
+if Add Player field is not empty when Add Player is clicked
+    onchange setup? could allow us to reset the input field?
+    send input string and nextTag to parent
+    split input first and last and push onto leagueStandings the new item
+    nextTag++

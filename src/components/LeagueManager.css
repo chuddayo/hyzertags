@@ -65,7 +65,7 @@
 
 .styled-table th,
 .styled-table td {
-  padding: 12px 15px;
+  padding: .75rem 1rem;
 }
 
 .styled-table tbody tr {
@@ -98,9 +98,11 @@
 
 .styled-table .text-input {
   max-width: 2rem;
+  height: .75rem;
+  margin-top: .5rem;
 }
 
-.event-input {
+.text-input {
   display: block;
   margin: 0 auto 1rem;
   padding: 5px;

@@ -50,7 +50,7 @@ function EventTable({ eventResults, playerList }) {
 
   return (
     <div>
-      <table className="styled-table event-table">
+      <table className="styled-table">
         <thead>
           {/* <tr>
             <th colSpan="2">{value}</th>
@@ -89,7 +89,7 @@ function EventTable({ eventResults, playerList }) {
 
       <input
         placeholder="Event Name"
-        className="text-input event-input"
+        className="text-input"
         onChange={(e) => {
           handleEventNameChange(e);
         }}
