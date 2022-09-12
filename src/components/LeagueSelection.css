@@ -9,3 +9,7 @@
 .flex-buttons button {
     margin: 0.5rem .25rem;
 }
+
+.league-header {
+    padding: 0;
+}

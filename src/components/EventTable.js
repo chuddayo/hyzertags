@@ -52,9 +52,6 @@ function EventTable({ eventResults, playerList }) {
     <div>
       <table className="styled-table">
         <thead>
-          {/* <tr>
-            <th colSpan="2">{value}</th>
-          </tr> */}
           <tr>
             <th>
               Incoming

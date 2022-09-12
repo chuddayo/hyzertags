@@ -13,6 +13,7 @@ function LeagueSelection({
 }) {
   // keeps track of value of selected league in dropdown
   const [selectedLeague, setSelectedLeague] = useState("");
+  const [selectedLeagueName, setSelectedLeagueName] = useState("");
   // toggles add player text-input field
   const [showAddPlayerInput, setShowAddPlayerInput] = useState(false);
   // keeps track of value of new player name in text-input field
@@ -42,6 +43,7 @@ function LeagueSelection({
   const leagueChange = (e) => {
     setSelectedLeague(e.target.value);
     console.log("selected league: ", e.target.value);
+    setSelectedLeagueName(e.target.options[e.target.selectedIndex].text);
 
     // need to inject
     axios
@@ -66,7 +68,7 @@ function LeagueSelection({
   async function addPlayerToDB() {
     let newPlayer = await axios.post(`${requests.fetchPlayers}`, {
       firstName: newPlayerName.substring(0, newPlayerName.indexOf(" ")),
-      lastName: newPlayerName.substring(newPlayerName.indexOf(" ") + 1)
+      lastName: newPlayerName.substring(newPlayerName.indexOf(" ") + 1),
     });
     return newPlayer;
   }
@@ -74,21 +76,23 @@ function LeagueSelection({
   const handlePlayerAddition = () => {
     setShowAddPlayerInput(!showAddPlayerInput);
     if (newPlayerName !== "") {
-      addPlayerToDB().then((newPlayer) => {
-        handleLeagueStandingsChange(
-          leagueStandings.concat({
-            leagueID: parseInt(selectedLeague),
-            playerTag: nextTag,
-            player: newPlayer.data,
-            selected: false,
-            strokesToPar: null,
-          })
-        );
-        setNextTag(nextTag + 1);
-        setNewPlayerName(""); 
-      }).catch((error) => {
-        console.log(error);
-      });
+      addPlayerToDB()
+        .then((newPlayer) => {
+          handleLeagueStandingsChange(
+            leagueStandings.concat({
+              leagueID: parseInt(selectedLeague),
+              playerTag: nextTag,
+              player: newPlayer.data,
+              selected: false,
+              strokesToPar: null,
+            })
+          );
+          setNextTag(nextTag + 1);
+          setNewPlayerName("");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -108,40 +112,43 @@ function LeagueSelection({
               ))}
             </select>
           </div>
-          <LeagueCreation passNewlyCreatedLeague={passNewlyCreatedLeague}/>
+          <LeagueCreation passNewlyCreatedLeague={passNewlyCreatedLeague} />
         </>
       )}
 
       {/* Standings Table */}
       {selectedLeague && (
-        <table className="styled-table">
-          <thead>
-            <tr>
-              <th>Tag #</th>
-              <th>Name</th>
-              <th>Check-In</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leagueStandings.map((playerRow) => (
-              <tr key={playerRow.player.id}>
-                <td>{playerRow.playerTag}</td>
-                <td>
-                  {playerRow.player.firstName} {playerRow.player.lastName}
-                </td>
-                <td>
-                  <input
-                    type="checkbox"
-                    id={playerRow.player.id}
-                    onChange={(e) => {
-                      playerCheckIn(playerRow);
-                    }}
-                  />
-                </td>
+        <>
+          <h2 className="league-header">{selectedLeagueName}</h2>
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Tag #</th>
+                <th>Name</th>
+                <th>Check-In</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {leagueStandings.map((playerRow) => (
+                <tr key={playerRow.player.id}>
+                  <td>{playerRow.playerTag}</td>
+                  <td>
+                    {playerRow.player.firstName} {playerRow.player.lastName}
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      id={playerRow.player.id}
+                      onChange={(e) => {
+                        playerCheckIn(playerRow);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
 
       {selectedLeague && (
