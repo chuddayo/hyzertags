@@ -130,3 +130,7 @@ button {
 button:hover {
   box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
 }
+
+.btn-new-league {
+  margin-bottom: .5rem;
+}

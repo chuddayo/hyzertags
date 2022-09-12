@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../axios";
 import requests from "../requests";
 import "./LeagueSelection.css";
+import LeagueCreation from "./LeagueCreation";
 
 function LeagueSelection({
   leagues,
@@ -18,6 +19,10 @@ function LeagueSelection({
   const [newPlayerName, setNewPlayerName] = useState("");
   // keeps track of next tag to be assigned in league
   const [nextTag, setNextTag] = useState(0);
+
+  const passNewlyCreatedLeague = (newLeague) => {
+    setSelectedLeague(newLeague);
+  };
 
   // initial component GET request for a league's next to be assigned tag number
   useEffect(() => {
@@ -36,7 +41,7 @@ function LeagueSelection({
   // called when league is selected from dropdown
   const leagueChange = (e) => {
     setSelectedLeague(e.target.value);
-    console.log(e.target.value);
+    console.log("selected league: ", e.target.value);
 
     // need to inject
     axios
@@ -90,7 +95,7 @@ function LeagueSelection({
   return (
     <div>
       {/* Dropdown Select */}
-      {!showAddPlayerInput && (
+      {!showAddPlayerInput && !selectedLeague && (
         <>
           <h4>select league to see standings</h4>
           <div className="custom-select">
@@ -103,6 +108,7 @@ function LeagueSelection({
               ))}
             </select>
           </div>
+          <LeagueCreation passNewlyCreatedLeague={passNewlyCreatedLeague}/>
         </>
       )}
 
